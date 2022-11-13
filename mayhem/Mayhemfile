@@ -1,6 +1,9 @@
 project: cleny
 target: cleny-fuzz
 
+testsuite:
+  - file://example.cleny
+
 cmds:
     - cmd: ./cleny-fuzz
       libfuzzer: true
