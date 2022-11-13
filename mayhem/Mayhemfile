@@ -1,0 +1,6 @@
+project: cleny
+target: cleny-fuzz
+
+cmds:
+    - cmd: ./cleny-fuzz
+      libfuzzer: true
