@@ -2,7 +2,7 @@ project: cleny
 target: cleny-fuzz
 
 testsuite:
-  - file://example.cleny
+  - file://fuzz/corpus/
 
 cmds:
     - cmd: ./cleny-fuzz
