@@ -18,12 +18,34 @@
 #include "../base/Base.h"
 #include "../base/General.h"
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
-    std::ofstream binFile("tmp.bin", std::ios::out | std::ios::binary);
-    binFile.write((char*)Data, Size);
-    binFile.close();
+class FuzzFile: public File {
+    public: 
+        FuzzFile(char* a) : File(a) {
 
-    File file("tmp.bin");
+        }
+        
+        void setData(const uint8_t *Data, size_t Size) {
+            if (this->EP) {
+                free(this->EP);
+            }
+            this->data = (char*) malloc(Size);
+            memcpy(this->data, Data, Size);
+            this->EP = this->data;
+            this->LP = this->data + (Size - 1);
+            this->size = Size;
+        }
+};
+
+FuzzFile file("dummy_file");
+
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
+    // std::ofstream binFile("tmp.bin", std::ios::out | std::ios::binary);
+    // binFile.write((char*)Data, Size);
+    // binFile.close();
+
+    file.setData(Data, Size);
+
+    // File file("tmp.bin");
 	Syntax syntax(&file);
 	syntax.scan();
 

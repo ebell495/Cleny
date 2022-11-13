@@ -10,3 +10,4 @@ RUN make
 
 FROM debian:bookworm
 COPY --from=builder /project/fuzz/cleny-fuzz /
+RUN touch dummy_file
